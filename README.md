@@ -9,8 +9,8 @@
 + react-router-dom/react-router-config
 + redux/redux-thunk/react-redux/redux-logger
 + express
-+ webpack@4.x
-+ babel@7.x
++ webpack 4.x
++ babel 7.x
 
 # 3. 项目目录
 
