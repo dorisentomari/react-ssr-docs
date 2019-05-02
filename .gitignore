@@ -63,3 +63,7 @@ typings/
 # ide
 .idea/
 .vs_code/
+
+# package code 
+build/server.js
+public/client.js
