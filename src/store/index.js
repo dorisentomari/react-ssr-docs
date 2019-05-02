@@ -10,7 +10,11 @@ export const getServerStore = () => createStore(
   composeWithDevTools(applyMiddleware(thunk, logger))
 );
 
-export const getClientStore = () => createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(thunk, logger))
-);
+export const getClientStore = () => {
+  let initState = window.context.state;
+  return createStore(
+    reducers,
+    initState,
+    composeWithDevTools(applyMiddleware(thunk, logger))
+  );
+}

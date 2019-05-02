@@ -65,6 +65,8 @@ const mapDispatchToProps = dispatch => ({
   propGetSchoolList() {
     dispatch(UserActions.getSchoolList());
   }
-})
+});
+
+Home.loadData = store => store.dispatch(UserActions.getSchoolList());
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

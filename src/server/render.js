@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter, Route } from 'react-router-dom';
+import { StaticRouter, Route, matchPath } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { getServerStore } from '../store';
 
@@ -13,21 +13,30 @@ export default (req, res) => {
 
   let store = getServerStore();
 
-  let domContent = renderToString(
-    <Provider store={store}>
-      <StaticRouter context={context} location={req.path}>
-        <>
-          <Header />
-          <div className="container" style={{ marginTop: 70 }}>
-            {
-              routes.map(route => <Route {...route} />)
-            }
-          </div>
-        </>
-      </StaticRouter>
-    </Provider>
-  );
-  let html = `
+  let promises = [];
+
+  routes.forEach(route => {
+    if (route.loadData) {
+      promises.push(route.loadData(store));
+    }
+  });
+  
+  Promise.all(promises).then(() => {
+    let domContent = renderToString(
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.path}>
+          <>
+            <Header />
+            <div className="container" style={{ marginTop: 70 }}>
+              {
+                routes.map(route => <Route {...route} />)
+              }
+            </div>
+          </>
+        </StaticRouter>
+      </Provider>
+    );
+    let html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,5 +57,6 @@ export default (req, res) => {
 </html>
 `;
 
-  res.send(html);
+    res.send(html);
+  });
 };

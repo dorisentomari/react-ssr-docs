@@ -16,7 +16,8 @@ app.get('/api/getSchoolList', (req, res) => {
     { id: 2, name: '植物大学' },
     { id: 3, name: '建筑大学' },
     { id: 4, name: '服装大学' }
-  ]
+  ];
+  console.log('request api/getSchoolList');
   return res.json({ schoolList });
 });
 

@@ -147,7 +147,6 @@ export default [
   {
     path: '/',
     component: Home,
-    loadData: Home.loadData,
     exact: true,
     key: '/'
   },
