@@ -1,5 +1,4 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React from 'react'
 import Home from './containers/Home';
 import News from './containers/News';
 

@@ -126,7 +126,46 @@ export default (state = initState, action) => {
       return { ...state };
   }
 }
+```
+## 2.2 路由文件的修改
 
++ 之所以要修改路由文件，其实是否修改在这里没什么影响，但是在下一小节里也是需要修改的，而且这一小节也比较简单，所以直接放在这里修改，避免与下一节的内容搞混乱
++ 之前我们的路由是这么写的
+
+```javascript
+export default (
+  <>
+    <Route path='/' exact component={Home}/>
+    <Route path='/news' component={News}/>
+  </>
+);
+```
++ 现在我们改成数组对象的形式，因为这样可以方便我们在组件上进行异步数据加载
+
+```javascript
+export default [
+  {
+    path: '/',
+    component: Home,
+    loadData: Home.loadData,
+    exact: true,
+    key: '/'
+  },
+  {
+    path: '/news',
+    component: News,
+    exact: true,
+    key: '/news'
+  }
+];
+```
+
++ 然后我们在客户端和服务端循环遍历，再组装改成 Route 的形式，仔细看看这两种写法也没啥区别，就是换了一种形式而已，为了方便后边我们使用
+
+```javascript
+{
+  routes.map(route => <Route {...route} />)
+}
 ```
 
 ## 2.2 客户端下的 redux
@@ -135,6 +174,7 @@ export default (state = initState, action) => {
 
 ```javascript
 import { Provider } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { getClientStore } from "../store";
 
 hydrate(
@@ -142,9 +182,11 @@ hydrate(
     <BrowserRouter>
       <>
         <Header/>
-        <div className="container" style={{marginTop: 70}}>
-          {routes}
-        </div>
+        <div className="container" style={{ marginTop: 70 }}>
+            {
+              routes.map(route => <Route {...route} />)
+            }
+          </div>
       </>
     </BrowserRouter>
   </Provider>, window.root);
@@ -153,7 +195,8 @@ hydrate(
 + containers/Home/index.js
   + 关于 react-redux 的 connect 的用法，可以把 connect 作为组件的装饰器使用，也可以作为函数直接调用使用，因为装饰器实际上就是函数多次调用的语法糖，所以我统一把 connect 的写成函数调用的形式
   + connect 的参数，可以直接把方法写在参数里，也可以像这里一样，把 mapStateToProps 和 mapDispatchToProps 先定义成方法，然后直接把方法作为参数
-  + 关于 actions 里方法的调用，我这里采用的方法，其实是有些复杂的，最简单其实就是直接在组件内部调用 actions 里的方法。我在这里又在组件内部定义了一个方法 A ，在这个组件的 props 里又定义了一个方法 B ，假如 actions 里的方法是 C 。那么最简单的方法就是直接在事件上调用 this.props.C()，但是我这里的顺序是这样的，先调用 A()，然后 A() 调用 B()，最后在 B() 里调用 C()。具体如何调用呢，根据个人喜好选择。
+  + 关于 actions 里方法的调用，我这里采用的方法，其实是有些复杂的，最简单其实就是直接在组件内部调用 actions 里的方法。我在这里又在组件内部定义了一个方法 A ，在这个组件的 props 里又定义了一个方法 B ，假如 actions 里的方法是 C 。那么最简单的方法就是直接调用 this.props.C()，但是我这里的顺序是这样的，先调用 A()，然后 A() 调用 B()，最后在 B() 里调用 C()。具体如何调用呢，根据个人喜好选择。
+  + 这里呢，倒不是我鸡贼，总是说怎么用都行，实际上这个也没有什么标准写法。我还是蛮喜欢现在这种写法的，比较清晰明了，传递参数和调用什么的，都很方便，缺点就是代码量多，修改的时候，改动多
 
 ```javascript
 import React, { Component } from 'react';
@@ -235,15 +278,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 ```javascript
 import { Provider } from 'react-redux';
+import { Route } from 'react-router-dom';
 
 let domContent = renderToString(
   <Provider store={getServerStore()}>
     <StaticRouter context={context} location={req.path}>
       <>
         <Header/>
-        <div className="container" style={{marginTop: 70}}>
-          {routes}
-        </div>
+        <div className="container" style={{ marginTop: 70 }}>
+            {
+              routes.map(route => <Route {...route} />)
+            }
+          </div>
       </>
     </StaticRouter>
   </Provider>
