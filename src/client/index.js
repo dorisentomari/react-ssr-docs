@@ -1,6 +1,7 @@
 import React from 'react'
 import { hydrate } from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 import { getClientStore } from '../store';
 import { Provider } from 'react-redux';
 
@@ -11,11 +12,6 @@ const store = getClientStore();
 
 hydrate(<Provider store={store}>
   <BrowserRouter>
-    <>
-      <Header />
-      <div className="container" style={{ marginTop: 70 }}>
-        {routes.map(route => <Route {...route} />)}
-      </div>
-    </>
+    {renderRoutes(routes)}
   </BrowserRouter>
 </Provider>, window.root);

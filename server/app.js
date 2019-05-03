@@ -1,7 +1,7 @@
 const express = require('express');
 
 let app = express();
-const PORT = 8758;
+const PORT = 8757;
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -17,7 +17,6 @@ app.get('/api/getSchoolList', (req, res) => {
     { id: 3, name: '建筑大学' },
     { id: 4, name: '服装大学' }
   ];
-  console.log('request api/getSchoolList');
   return res.json({ schoolList });
 });
 

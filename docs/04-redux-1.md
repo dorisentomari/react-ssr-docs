@@ -335,3 +335,89 @@ app.listen(PORT, err => {
 
 + 总的来看，同步的 redux 和客户端异步获取数据，用起来实际上跟普通的客户端渲染的时候，没什么大的区别，所以还是比较简单的
 + 复杂的是服务端异步获取，这里牵涉到组件的方法，promise 的包装，脱水和注水等，我们统一放到下一节介绍
+
+# 3. 拆分 server/index.js 里的代码
+
++ 因为后边我们要多次修改 server/index.js 的代码，所以先把代码进行拆分，拆分出一个 render.js 的文件，专门用来做渲染，而 index.js 文件只做单独的服务
+
++ /server/index.js
+
+```javascript
+import express from 'express';
+import render from './render';
+
+const app = express();
+const PORT = 3000;
+
+app.use(express.static('public'));
+
+app.get('*', (req, res) => {
+  render(req, res);
+});
+
+app.listen(PORT, err => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(`Server is running at http://localhost:${PORT}`);
+  }
+});
+```
+
++ /server/render.js
+
+```javascript
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { StaticRouter, Route, matchPath } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { getServerStore } from '../store';
+
+import Header from './../components/Header/index';
+import routes from '../routes';
+
+export default (req, res) => {
+
+  let context = {};
+
+  let store = getServerStore();
+
+  let domContent = renderToString(
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.path}>
+          <>
+            <Header />
+            <div className="container" style={{ marginTop: 70 }}>
+              {
+                routes.map(route => <Route {...route} />)
+              }
+            </div>
+          </>
+        </StaticRouter>
+      </Provider>
+    );
+    let html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  <title>react-ssr</title>
+</head>
+<body>
+<div id="root">${domContent}</div>
+<script>
+  window.context = {
+    state: ${JSON.stringify(store.getState())}
+  }
+</script>
+<script src="/client.js"></script>
+</body>
+</html>
+`;
+
+    res.send(html);
+};
+
+```

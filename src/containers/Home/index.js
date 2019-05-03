@@ -18,8 +18,10 @@ class Home extends Component {
     this.props.propIncrementAge();
   };
 
-  getSchoolList = () => {
-    this.props.propGetSchoolList();
+  componentDidMount () {
+    if (!this.props.user.schoolList.length) {
+      this.props.propGetSchoolList();
+    }
   }
 
   render() {
@@ -37,9 +39,9 @@ class Home extends Component {
             <button className="btn btn-primary" onClick={this.incrementAge}>increment age</button> &nbsp;&nbsp;&nbsp;&nbsp;
             <span>{this.props.user.age}</span></li>
         </ul>
-        <h2>
+        {/* <h2>
           <button className="btn btn-primary" onClick={this.getSchoolList}>schoolList</button>
-        </h2>
+        </h2> */}
         <ul className="list-group">
           {
             this.props.user.schoolList.map(school => (
