@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import * as UserActions from '../../store/user/createActions';
 import styles from './index.css';
 import WithStyle from '../../withStyle';
@@ -30,7 +30,7 @@ class Home extends Component {
   //   }
   // }
 
-  componentDidMount () {
+  componentDidMount() {
     if (!this.props.user.schoolList.length) {
       this.props.propGetSchoolList();
     }

@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import App from './App';
 import Home from './containers/Home';
 import News from './containers/News';
+import NotFound from './containers/NotFound/index';
 
 export default [
   {
@@ -22,6 +23,9 @@ export default [
         component: News,
         exact: true,
         key: '/news'
+      },
+      {
+        component: NotFound
       }
     ]
   }

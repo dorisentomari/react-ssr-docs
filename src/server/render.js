@@ -67,7 +67,11 @@ export default (req, res) => {
 </body>
 </html>
 `;
-
+    if (context.action === 'REPLACE') {
+      res.redirect(301, context.url);
+    } else if (context.NotFound) {
+      res.statusCode = 404;
+    }
     res.send(html);
   });
 };
