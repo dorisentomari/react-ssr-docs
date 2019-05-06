@@ -2,6 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, Route, matchPath } from 'react-router-dom';
 import { matchRoutes, renderRoutes } from 'react-router-config';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { getServerStore } from '../store';
 
@@ -43,7 +44,7 @@ export default (req, res) => {
       </Provider>
     );
     let cssStr = context.csses.length ? context.csses.join('\n') : '';
-
+    const helmet = Helmet.renderStatic();
     let html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,8 @@ export default (req, res) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
-  <title>react-ssr</title>
+  ${helmet.title.toString()}
+  ${helmet.meta.toString()}
   <style>${cssStr}</style>
 </head>
 <body>
