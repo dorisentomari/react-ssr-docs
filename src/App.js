@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header staticContext={this.props.staticContext} />
         <div className="container" style={{ marginTop: 70 }}>
           {renderRoutes(this.props.route.routes)}
         </div>

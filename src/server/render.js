@@ -11,7 +11,9 @@ import routes from '../routes';
 
 export default (req, res) => {
 
-  let context = {};
+  let context = {
+    csses: []
+  };
 
   let store = getServerStore(req);
 
@@ -40,6 +42,8 @@ export default (req, res) => {
         </StaticRouter>
       </Provider>
     );
+    let cssStr = context.csses.length ? context.csses.join('\n') : '';
+
     let html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +52,7 @@ export default (req, res) => {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
   <title>react-ssr</title>
+  <style>${cssStr}</style>
 </head>
 <body>
 <div id="root">${domContent}</div>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as UserActions from '../../store/user/createActions';
+import styles from './index.css';
+import WithStyle from '../../withStyle';
 
 class Home extends Component {
 
@@ -18,6 +20,15 @@ class Home extends Component {
     this.props.propIncrementAge();
   };
 
+  // componentWillMount() {
+  //   let staticContext = this.props.staticContext;
+  //   if (staticContext) {
+  //     if (staticContext) {
+  //       staticContext.csses.push(styles._getCss());
+  //     }
+  //   }
+  // }
+
   componentDidMount () {
     if (!this.props.user.schoolList.length) {
       this.props.propGetSchoolList();
@@ -26,8 +37,8 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-        <h2>HELLO, HOME PAGE</h2>
+      <div className={styles.wrapper}>
+        <h2 className={styles.title}>HELLO, HOME PAGE</h2>
         <h2>
           <button className="btn btn-primary" onClick={this.handleClick}>click</button>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,6 +80,8 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-Home.loadData = store => store.dispatch(UserActions.getSchoolList());
+const ExportHome = connect(mapStateToProps, mapDispatchToProps)(WithStyle(Home, styles));
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+ExportHome.loadData = store => store.dispatch(UserActions.getSchoolList());
+
+export default ExportHome;
