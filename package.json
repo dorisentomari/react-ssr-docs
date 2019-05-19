@@ -1,7 +1,7 @@
 {
   "name": "react-ssr-docs",
   "version": "1.0.0",
-  "description": "完全解读 react 服务端渲染",
+  "description": "详解 react 服务端渲染",
   "main": "index.js",
   "scripts": {
     "dev": "npm-run-all --parallel dev:**",
