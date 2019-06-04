@@ -25,7 +25,7 @@
 ```
 ├── node_modules/   第三方依赖包
 |── build/  服务端打包后生成的代码
-|   └── server.js 
+|   └── server.js
 ├── public/  	客户端打包后生成的代码
 │   └── client.js
 ├── src
@@ -59,4 +59,6 @@
 
 + [07-添加CSS样式](https://github.com/dawnight/react-ssr-docs/blob/master/docs/07-%E6%B7%BB%E5%8A%A0CSS%E6%A0%B7%E5%BC%8F.md)
 
-+ [08-SEO优化](https://github.com/dawnight/react-ssr-docs/blob/master/docs/08-SEO%E4%BC%98%E5%8C%96.md)
++ [08-404和重定向](https://github.com/dawnight/react-ssr-docs/blob/master/docs/08-404%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91.md)
+
++ [09-SEO优化](https://github.com/dawnight/react-ssr-docs/blob/master/docs/08-SEO%E4%BC%98%E5%8C%96.md)
