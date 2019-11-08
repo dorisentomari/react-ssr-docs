@@ -1,5 +1,4 @@
 # 1. redux
-
 + 路由完成了之后，我们就需要考虑数据了，我们采用使用的最为广泛的 redux 来管理 react 的数据状态
 + 更新 store 有三种
   + 同步，这个同步是包括客户端和服务端的统一更新
@@ -8,7 +7,6 @@
 + 所以这一节主要介绍同步更新 store 和客户端异步更新 store
 
 ## 1.1 介绍
-
 + store 的创建分为两种，一种是客户端，另外一种是服务端，而且每一个端的 store 都要分开，作为一个方法调用，这样做的目的是客户端的话，每一个用户都有一个客户端，使用的是自己的 store 里的数据，但是服务端不一样，无论有多少个客户端，服务端只有一个，所以，为了避免每个用户的 store 数据混乱，所以我们把服务端的 store 作为一个方法调用，这样，每个用户调用服务端 store 的时候，就有一个自己的方法，调用的是自己的数据，这样，数据就不会混乱
 + 客户端使用 store 的方法和平时的客户端渲染是一样的，没有区别
 + 服务端使用 store 的方法也仅仅是在 StaticRouter 外边包裹一层 Provider，然后传入服务端的 store 即可
@@ -23,7 +21,6 @@
 + redux-devtools-extension，这个是一个谷歌浏览器上的 [redux](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=zh-CN) 的插件，这个插件需要我们使用中间件开启，才能够查看到 state 的变化状态
 
 # 2. 使用最简单的 redux
-
 + 由于代码比较简单，与平时我们客户端使用 redux 差异很小，所以直接看代码也可以看明白的
 + 这里的功能有三个
   + 第一个是直接获取 redux 里的数据，获取 user 下的 username 的值
@@ -31,7 +28,6 @@
   + 第三个是客户端调用第三方接口，获取数据，修改 user 下的 schoolList 的值
 
 ## 2.1 创建 store
-
 + store/index.js
 
 ```javascript
@@ -77,7 +73,7 @@ export const GET_SCHOOL_LIST = 'GET_SCHOOL_LIST';
   + 关于 action 的值，有人喜欢用 payload，有人喜欢直接用需要的值的变量名，这个用什么都行，只要前后统一即可，没有强制性的规范。
   + 由于在 redux-logger 里采用的是 payload，所以建议还是使用 payload
   + 这实际上就是一个属性值，只要保证 actions 里定义的和 reducer 里获取的是同一个就行
-
+  + 注意：这里的接口，是一个模拟的接口，就是下边的 2.4 节接口服务，自己可以简单定义一个接口，目的是为了做 ajax 请求响应数据
 ```javascript
 import * as Types from './actionTypes';
 import axios from 'axios';
@@ -128,7 +124,6 @@ export default (state = initState, action) => {
 }
 ```
 ## 2.2 路由文件的修改
-
 + 之所以要修改路由文件，其实是否修改在这里没什么影响，但是在下一小节里也是需要修改的，而且这一小节也比较简单，所以直接放在这里修改，避免与下一节的内容搞混乱
 + 之前我们的路由是这么写的
 
@@ -272,7 +267,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 ## 2.3 服务端下的 redux
 + 服务端的 redux 在同步的状态下，写起来比较简单，没有什么复杂的，其实就是直接把 store 传递给 Provider 就可以
-
 + server/index.js
 
 ```javascript
@@ -295,8 +289,7 @@ let domContent = renderToString(
 );
 ```
 
-## 2.4 第三方服务
-
+## 2.4 接口服务
 + /server/app.js，这里已经完全放开了跨域，暂不处理，后期要做修改调整
 
 ```javascript
@@ -332,12 +325,10 @@ app.listen(PORT, err => {
 ```
 
 ## 2.4 总结
-
 + 总的来看，同步的 redux 和客户端异步获取数据，用起来实际上跟普通的客户端渲染的时候，没什么大的区别，所以还是比较简单的
 + 复杂的是服务端异步获取，这里牵涉到组件的方法，promise 的包装，脱水和注水等，我们统一放到下一节介绍
 
 # 3. 拆分 server/index.js 里的代码
-
 + 因为后边我们要多次修改 server/index.js 的代码，所以先把代码进行拆分，拆分出一个 render.js 的文件，专门用来做渲染，而 index.js 文件只做单独的服务
 
 + /server/index.js

@@ -1,13 +1,11 @@
 # 1. SEO优化
 + 搜索引擎优化`Search engine optimization`
 + 搜索引擎分析网站的时候，搜集网站的全部内容，进行分析，然后得出一个主题，这个主题，就是搜索关键词
-+ title 标签和 meta 里的 description 的真正作用是提高网站的转化率，不在于SEO优化
++ title 标签和 meta 里的 description 的真正作用是提高网站的转化率，不在于 SEO 优化
 + 网站的三部分：文字，链接和媒体。文字的原创；链接的相关性，外部链接越多，网站的欢迎程度越好；图片的原创，高清
 
 # 2. 使用 react-helmet 进行 SEO 优化
-
 ## 2.1 客户端使用
-
 + Home 页面
 
 ```javascript
@@ -54,7 +52,6 @@ class News extends Component {
 ```
 
 ## 2.2 服务端使用
-
 + src/server/render.js
 
 ```javascript
@@ -63,7 +60,7 @@ import { Helmet } from 'react-helmet';
 
 export default (req, res) => {
   Promise.all(promises).then(() => {
-    
+
     const helmet = Helmet.renderStatic();
 
     let html = `
