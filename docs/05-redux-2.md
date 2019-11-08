@@ -176,10 +176,10 @@ export const getClientStore = () => {
 
 + 页面效果，学校列表是通过服务端渲染获取到的，不再是客户端获取数据
 
-![页面效果](./images/10-server-async-request-data.png)
+![页面效果](http://file.ikite.top/react-ssr/10-server-async-request-data.png)
 
 + 页面源码，主要是看红框里的， HTML 里已经有了各个的 school 信息，同时，服务端注水的内容，也作为字符串显示在页面上
 
-![页面源码](./images/10-server-async-request-data-source-code.png)
+![页面源码](http://file.ikite.top/react-ssr/10-server-async-request-data-source-code.png)
 
 + 由于这一节的内容比较复杂，也比较难，所以我们就介绍这么多，下一节我们主要介绍一下优化当前的代码
