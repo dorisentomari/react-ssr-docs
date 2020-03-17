@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 class News extends Component {
   render() {
     return (
-      <Redirect to="/" />
+      <div>
+        这是 News 组件
+      </div>
     );
   }
 }

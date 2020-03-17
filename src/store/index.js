@@ -19,4 +19,4 @@ export const getClientStore = () => {
     initState,
     composeWithDevTools(applyMiddleware(thunk.withExtraArgument(clientAxios), logger))
   );
-}
+};

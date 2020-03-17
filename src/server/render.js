@@ -6,9 +6,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { getServerStore } from '../store';
 
-import Header from './../components/Header/index';
 import routes from '../routes';
-
 
 export default (req, res) => {
 
@@ -51,7 +49,7 @@ export default (req, res) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.css" rel="stylesheet">
   ${helmet.title.toString()}
   ${helmet.meta.toString()}
   <style>${cssStr}</style>

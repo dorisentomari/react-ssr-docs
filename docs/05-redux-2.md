@@ -163,3 +163,14 @@ export const getClientStore = () => {
 ![页面源码](http://file.ikite.top/react-ssr/10-server-async-request-data-source-code.png)
 
 + 由于这一节的内容比较复杂，也比较难，所以我们就介绍这么多，下一节我们主要介绍一下优化当前的代码
+
+# docs 文档链接
++ [01-项目基础架构搭建](./01-项目基础架构搭建.md)
++ [02-最简单的服务端渲染](./02-最简单的服务端渲染.md)
++ [03-路由](./03-路由.md)
++ [04-redux-01](./04-redux-1.md)
++ [05-redux-02](./05-redux-2.md)
++ [06-优化](./06-优化.md)
++ [07-添加CSS样式](./07-添加CSS样式.md)
++ [08-404和重定向](./08-404和重定向.md)
++ [09-SEO优化](./09-SEO优化.md)
